@@ -1,0 +1,297 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <material name="blue">
+      <color rgba="0.0 0.0 1.0 1.0"/>
+  </material>
+  <material name="red">
+      <color rgba="1.0 0.0 0.0 1.0"/>
+  </material>
+  <material name="green">
+      <color rgba="0.0 1.0 0.0 1.0"/>
+  </material>
+  <material name="yellow">
+      <color rgba="1.0 1.0 0.0 1.0"/>
+  </material>
+  <material name="white">
+      <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+
+    <xacro:macro name="arm_default_transmission" params="joint_number" >
+      <plugin>transmission_interface/SimpleTransmission</plugin>
+      <transmission name="transmission_${joint_number}">
+          <joint name="joint_${joint_number}" role="joint1">
+              <mechanicalReduction>1.0</mechanicalReduction>
+          </joint>
+          <actuator name="servo_${joint_number}" role="actuator1"/>
+      </transmission>
+  </xacro:macro>
+
+    <link name="baselink">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.1 0.1 0.01"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.1 0.1 0.01"/>
+        </geometry>
+        <material name="white"/>
+      </collision>
+      <xacro:box mass="50" length="0.1" width="0.1" height="0.01" 
+          xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
+    <link name="world"/>
+    <joint name="virtual_joint" type="fixed">
+      <parent link="world"/>
+      <child link="baselink"/>
+      <origin xyz="0.0 0.0 0.005" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+    <link name="link1">
+      <visual name="">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </collision>
+      <xacro:cylinder mass="0.069" radius="0.015" height="0.06"
+            xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
+
+    <joint name="joint_1" type="revolute">
+      <parent link="baselink"/>
+      <child link="link1"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="3.14159" velocity="1.0" effort="1000.0"/>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+    </joint>
+    
+    <link name="link2">
+      <visual name="">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </collision>
+      <xacro:cylinder mass="0.069" radius="0.015" height="0.06"
+            xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
+
+    <joint name="joint_2" type="revolute">
+      <parent link="link1"/>
+      <child link="link2"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="3.14159" velocity="1.0" effort="1000.0"/>
+      <origin xyz="0 0 0.045" rpy="1.57 0 0"/>
+    </joint>
+    
+    <link name="link3">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.1 0.02 0.001"/>
+        </geometry>
+        <material name="red"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.1 0.02 0.001"/>
+        </geometry>
+        <material name="red"/>
+      </collision>
+      <xacro:box mass="0.05" length="0.1" width="0.02" height="0.001" 
+          xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
+    <joint name="dummy" type="fixed">
+      <parent link="link2"/>
+      <child link="link3"/>
+      <origin xyz="0.05 0.0 0.03" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+    <link name="link4">
+      <visual name="">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </collision>
+      <xacro:cylinder mass="0.069" radius="0.015" height="0.06"
+            xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
+    
+    <joint name="joint_3" type="revolute">
+      <parent link="link3"/>
+      <child link="link4"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="3.14159" velocity="1.0" effort="1000.0"/>
+      <origin xyz="0.05 0 -0.03" rpy="3.142 0 0"/>
+    </joint>
+
+    <link name="link5">
+      <visual name="">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </collision>
+      <xacro:cylinder mass="0.069" radius="0.015" height="0.06"
+            xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
+    
+    <joint name="joint_4" type="revolute">
+      <parent link="link4"/>
+      <child link="link5"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="3.14159" velocity="1.0" effort="1000.0"/>
+      <origin xyz="0.0 -0.045 0.0" rpy="1.57 0 0"/>
+    </joint>
+
+
+    <link name="link6">
+      <visual name="">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </collision>
+      <xacro:cylinder mass="0.069" radius="0.015" height="0.06"
+            xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
+
+    <joint name="joint_5" type="revolute">
+      <parent link="link5"/>
+      <child link="link6"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="3.14159" velocity="1.0" effort="1000.0"/>
+      <origin xyz="0 0 0.045" rpy="1.57 0 0"/>
+    </joint>
+
+    <link name="link7">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.1 0.02 0.001"/>
+        </geometry>
+        <material name="red"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.1 0.02 0.001"/>
+        </geometry>
+        <material name="red"/>
+      </collision>
+      <xacro:box mass="0.05" length="0.1" width="0.02" height="0.001" 
+          xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
+    <joint name="dummy2" type="fixed">
+      <parent link="link6"/>
+      <child link="link7"/>
+      <origin xyz="0.05 0.0 0.03" rpy="0.0 0.0 0.0"/>
+    </joint>
+    <link name="link8">
+      <visual name="">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.015" length="0.06"/>
+        </geometry>
+        <material name="blue"/>
+      </collision>
+      <xacro:cylinder mass="0.069" radius="0.015" height="0.06"
+            xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
+
+    <joint name="joint_6" type="revolute">
+      <parent link="link7"/>
+      <child link="link8"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="0" upper="3.14159" velocity="1.0" effort="1000.0"/>
+      <origin xyz="0.08 0 0.0" rpy="1.57 0 1.57"/>
+    </joint>
+
+    <link name="tool_tip">
+      <visual name="">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.005" length="0.07"/>
+        </geometry>
+        <material name="yellow"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.005" length="0.06"/>
+        </geometry>
+        <material name="yellow"/>
+      </collision>
+      <xacro:cylinder mass="0.03" radius="0.005" height="0.06"
+            xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
+
+    <joint name="end_effector" type="fixed">
+      <parent link="link8"/>
+      <child link="tool_tip"/>
+      <origin xyz="0.0 0.0 0.065" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+    <xacro:arm_default_transmission joint_number="1"></xacro:arm_default_transmission>
+    <xacro:arm_default_transmission joint_number="2"></xacro:arm_default_transmission>
+    <xacro:arm_default_transmission joint_number="3"></xacro:arm_default_transmission>
+    <xacro:arm_default_transmission joint_number="4"></xacro:arm_default_transmission>
+    <xacro:arm_default_transmission joint_number="5"></xacro:arm_default_transmission>
+    <xacro:arm_default_transmission joint_number="6"></xacro:arm_default_transmission>
+
+</robot>

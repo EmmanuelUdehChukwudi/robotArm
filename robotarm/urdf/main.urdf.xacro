@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arm">
+    <xacro:include filename="arm_inertia.urdf.xacro"/>
+    <xacro:include filename="arm_core.urdf.xacro"/>
+    <xacro:include filename="arm_gazebo.urdf.xacro"/>
+    <xacro:include filename="sim_ros2_control.urdf.xacro"/>
+</robot>
