@@ -9,12 +9,24 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(hardware_interface REQUIRED)
 find_package(pluginlib REQUIRED)
+find_package(rclpy REQUIRED)
+find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(SERIAL libserial)
 
+add_executable(slider_control src/slider.cpp)
+ament_target_dependencies(slider_control rclcpp trajectory_msgs sensor_msgs)
+ament_python_install_package(${PROJECT_NAME})
+install(TARGETS
+  slider_control
+  DESTINATION lib/${PROJECT_NAME}
+
+
+)
 add_library(
   ${PROJECT_NAME}
   SHARED
@@ -32,6 +44,11 @@ ament_target_dependencies(
   pluginlib
   rclcpp
   rclcpp_lifecycle
+)
+
+install(PROGRAMS
+  ${PROJECT_NAME}/joint_slider.py
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE "JOINT_STATE_BROADCASTER_BUILDING_DLL")
