@@ -17,9 +17,9 @@
 
     </include>
 
-    <include file="$(find-pkg-share robotarm)/launch/controller.launch.py">
+    <!-- <include file="$(find-pkg-share arm_controller)/launch/controller.launch.py">
         
-    </include>
+    </include> -->
     <node pkg="gazebo_ros" exec="spawn_entity.py"
         args="-topic robot_description -entity arm"/>
 

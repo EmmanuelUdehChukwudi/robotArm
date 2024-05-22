@@ -36,7 +36,7 @@
         <plugin filename="libgazebo_ros2_control.so" name="arm_ros2_control">
           <robot_param>robot_description</robot_param>
           <robot_param_node>robot_state_publisher</robot_param_node>
-          <parameters>$(find robotarm)/config/robotarm_controllers.yaml</parameters>
+          <parameters>$(find arm_controller)/config/robotarm_controllers.yaml</parameters>
         </plugin>
       </gazebo>
   
