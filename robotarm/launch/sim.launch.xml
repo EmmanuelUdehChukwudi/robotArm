@@ -12,7 +12,7 @@
         <param name="robot_description" 
         value="$(command 'xacro $(var urdf_path)')"/>
     </node>
-
+    
     <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
 
     </include>
@@ -23,9 +23,9 @@
     <node pkg="gazebo_ros" exec="spawn_entity.py"
         args="-topic robot_description -entity arm"/>
 
-    <!-- <include file="$(find-pkg-share robotarm)/launch/moveit.launch.py">
+    <include file="$(find-pkg-share robotarm)/launch/moveit.launch.py">
     
-    </include> -->
+    </include>
 
     <!-- <node pkg="rviz2" exec="rviz2" output="screen"
             args="-d $(var rviz_config_path)"/> -->
